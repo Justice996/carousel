@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .imgBox{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .imgBox ul{
+            width: 800px;
+            height: 400px;
+            display: flex;
+            overflow: hidden;
+            list-style: none;
+            img{
+                display: block;
+                width: 800px;
+                height: 400px;
+            }
+        }
+        #pre,#next{
+            width: 30px;
+            height: 60px;
+            background-color: blue;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="imgBox">
+        <div id="pre"><</div>
+        <ul id="ulBox">
+            <li><img src="./img/img.png" alt=""></li>
+            <li><img src="./img/img1.png" alt=""></li>
+            <li><img src="./img/img2.png" alt=""></li>
+        </ul>
+        <div id="next">></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $('#pre').click(()=>{
+            $('#ulBox').scrollLeft($('#ulBox').scrollLeft()==0?1600:$('#ulBox').scrollLeft()-800);
+        })
+        $('#next').click(()=>{
+            // alert($('#ulBox').scrollLeft())
+            $('#ulBox').scrollLeft($('#ulBox').scrollLeft()>=1600?0:$('#ulBox').scrollLeft()+800);
+        })
+        $('#ulBox img').mousedown(function(e){
+            e.preventDefault();
+            startX=e.pageX;
+            startY=e.pageY;
+            $(this).mousemove(function(e){
+                e.preventDefault();
+                moveEndX=e.pageX;
+                moveEndY=e.pageY;
+                X=moveEndX-startX;
+                Y=moveEndY-startY;
+                if(X>100){
+                    $('#ulBox').scrollLeft($('#ulBox').scrollLeft()==0?1600:$('#ulBox').scrollLeft()-800);
+                    $(this).off("mousemove")
+                }
+                if(X<-100){
+                    $('#ulBox').scrollLeft($('#ulBox').scrollLeft()>=1600?0:$('#ulBox').scrollLeft()+800);
+                    $(this).off("mousemove")
+                }
+            })
+        }).mouseup(function(){
+            $(this).off("mousemove")
+        })
+    </script>
+</body>
+</html>
